@@ -3,6 +3,7 @@
 import { useSidebar } from "@/context/sidebar.context";
 import { Bell, Menu, Search } from "lucide-react";
 import Link from "next/link";
+import { UserDropdown } from "./dropdown.menu";
 
 export function Header() {
   const { toggle } = useSidebar();
@@ -35,12 +36,8 @@ export function Header() {
           <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
           <span className="sr-only">Notifications</span>
         </button>
-        <Link
-          href="/profile"
-          className="flex items-center gap-2 hover:text-gray-600"
-        >
-          <div className="h-8 w-8 rounded-full bg-gray-200"></div>
-        </Link>
+
+        <UserDropdown />
       </div>
     </header>
   );
