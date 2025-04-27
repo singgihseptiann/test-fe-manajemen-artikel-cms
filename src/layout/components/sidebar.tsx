@@ -1,0 +1,70 @@
+"use client";
+
+import { useSidebar } from "@/context/sidebar.context";
+import { X } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { links } from "../menu";
+
+export function Sidebar() {
+  const { isOpen, close } = useSidebar();
+  const pathname = usePathname();
+
+  return (
+    <>
+      {/* Mobile overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          onClick={close}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex h-full w-64 flex-col bg-gray-800 text-white transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        }`}
+      >
+        <div className="flex items-center justify-between border-b border-gray-700 p-4">
+          <h2 className="text-xl font-semibold">Admin Panel</h2>
+          <button
+            onClick={close}
+            className="rounded p-1 hover:bg-gray-700 md:hidden"
+          >
+            <X className="h-5 w-5" />
+            <span className="sr-only">Close sidebar</span>
+          </button>
+        </div>
+
+        <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-2">
+          {links.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors hover:bg-gray-700 ${
+                  isActive ? "bg-gray-700 font-medium" : ""
+                }`}
+              >
+                <link.icon className="h-5 w-5" />
+                <span>{link.name}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="border-t border-gray-700 p-4">
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-8 rounded-full bg-gray-600"></div>
+            <div>
+              <p className="text-sm font-medium">Admin User</p>
+              <p className="text-xs text-gray-400">admin@example.com</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </>
+  );
+}
