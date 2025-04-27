@@ -12,7 +12,7 @@ export function useLogin() {
     onSuccess: (response) => {
       localStorage.setItem("user_token", response.token);
       alert("Login berhasil!");
-      router.push("/home");
+      router.push("/articles");
     },
 
     onError: (error: any) => {

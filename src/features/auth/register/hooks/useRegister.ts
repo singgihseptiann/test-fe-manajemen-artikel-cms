@@ -14,7 +14,7 @@ export function useRegister() {
       localStorage.setItem("user_password", response.password);
       localStorage.setItem("user_role", response.role);
       alert("Registrasi berhasil!");
-      router.push("/home");
+      router.push("/articles");
     },
 
     onError: (error: any) => {
