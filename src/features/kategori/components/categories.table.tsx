@@ -11,16 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ChevronDown, Plus } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -31,27 +22,29 @@ import {
 } from "@/components/ui/table";
 
 import { columns } from "./categories.column";
-
 import { usePagination } from "@/context/pagination.context";
 import { Spinner } from "@/components/spinner";
+
+import { Button } from "@/components/ui/button";
+import { useGetCategories } from "../hooks/useGetCategories";
+import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { useGetCategories } from "@/hooks/useGetCategory";
+import { Plus } from "lucide-react";
+import { AddCategoriesForm } from "@/features/add-categories/components/add.categories";
 
 export function CategoriesTable() {
-  const {
-    data: categories,
-    isLoading,
-    isFetching,
-    isFetched,
-  } = useGetCategories();
-
+  const { data: categories, isLoading, isFetching } = useGetCategories();
   const { page, setPage } = usePagination();
 
-  const totalCategories = categories?.total ?? [];
+  const totalCategories = categories?.totalData ?? 0;
+  const totalPages = categories?.totalPages ?? 1;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
     data: categories?.data ?? [],
@@ -61,9 +54,13 @@ export function CategoriesTable() {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
       columnFilters,
+      columnVisibility,
+      rowSelection,
     },
   });
 
@@ -83,6 +80,22 @@ export function CategoriesTable() {
             <p>Total Categories:</p>
             <p>{totalCategories}</p>
           </div>
+        </div>
+        <div className="flex flex-col gap-2 p-2 py-5 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-2">
+            <Input
+              placeholder="Filter categories..."
+              value={
+                (table.getColumn("name")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table.getColumn("name")?.setFilterValue(event.target.value)
+              }
+              className="h-10"
+            />
+          </div>
+
+          <AddCategoriesForm />
         </div>
         <Table>
           <TableHeader className="bg-gray-100">
@@ -139,6 +152,31 @@ export function CategoriesTable() {
             )}
           </TableBody>
         </Table>
+        <div className="flex items-center justify-end space-x-2 p-2 py-5">
+          <div className="text-muted-foreground flex-1 text-sm">
+            Page {page} of {totalPages}
+          </div>
+          <div className="space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="cursor-pointer"
+              onClick={() => setPage(page - 1)}
+              disabled={page === 1}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="cursor-pointer"
+              onClick={() => setPage(page + 1)}
+              disabled={page >= totalPages}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );
