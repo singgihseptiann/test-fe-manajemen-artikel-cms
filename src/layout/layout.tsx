@@ -17,7 +17,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       <div className="ml-0 flex flex-1 flex-col md:ml-64">
         <Header />
-        <main className="flex-1 overflow-hidden p-4">{children}</main>
+        <main className="flex-1 overflow-hidden bg-gray-50 p-4">
+          {children}
+        </main>
       </div>
     </div>
   );

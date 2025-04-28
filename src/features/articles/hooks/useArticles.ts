@@ -8,5 +8,6 @@ export const useArticles = () => {
   return useQuery({
     queryKey: ["articles", page],
     queryFn: () => api.get("articles", { page, limit }),
+    staleTime: 5 * 60 * 1000,
   });
 };

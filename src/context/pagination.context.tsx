@@ -17,7 +17,7 @@ export function PaginationProvider({
   children: React.ReactNode;
 }) {
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(5);
 
   return (
     <PaginationContext.Provider value={{ page, setPage, limit, setLimit }}>
