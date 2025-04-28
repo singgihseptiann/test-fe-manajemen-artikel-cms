@@ -5,6 +5,7 @@ import { Article } from "@/types/articles.types";
 
 import ConfirmationDialog from "@/components/confirmation.dialog";
 import { useDeleteArticles } from "../hooks/useArticles";
+import Link from "next/link";
 
 export const columns: ColumnDef<Article>[] = [
   {
@@ -93,9 +94,17 @@ export const columns: ColumnDef<Article>[] = [
           <Button variant="link" size="sm" className="text-blue-500 underline">
             View
           </Button>
-          <Button variant="link" size="sm" className="text-blue-500 underline">
-            Edit
-          </Button>
+          <Link href={`/articles/edit/${article.id}`}>
+            {" "}
+            <Button
+              variant="link"
+              size="sm"
+              className="text-blue-500 underline"
+            >
+              Edit
+            </Button>
+          </Link>
+
           <ConfirmationDialog
             triggerText="Delete"
             title="Delete Articles"
