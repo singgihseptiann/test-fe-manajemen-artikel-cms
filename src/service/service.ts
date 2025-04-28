@@ -14,7 +14,12 @@ const api = {
   // Fungsi POST untuk mengirimkan data
   post: async (endpoint: string, data: any) => {
     try {
-      const response = await apiServices.post(endpoint, data);
+      const token = localStorage.getItem("user_token"); // Ambil token dari localStorage
+      const response = await apiServices.post(endpoint, data, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "", // Jika token ada, sertakan di header
+        },
+      });
       return response.data;
     } catch (error) {
       throw error;
@@ -24,7 +29,12 @@ const api = {
   // Fungsi PUT untuk memperbarui data
   put: async (endpoint: string, data: any) => {
     try {
-      const response = await apiServices.put(endpoint, data);
+      const token = localStorage.getItem("user_token"); // Ambil token dari localStorage
+      const response = await apiServices.put(endpoint, data, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "", // Jika token ada, sertakan di header
+        },
+      });
       return response.data;
     } catch (error) {
       throw error;
@@ -34,7 +44,12 @@ const api = {
   // Fungsi DELETE untuk menghapus data
   delete: async (endpoint: string) => {
     try {
-      const response = await apiServices.delete(endpoint);
+      const token = localStorage.getItem("user_token"); // Ambil token dari localStorage
+      const response = await apiServices.delete(endpoint, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "", // Jika token ada, sertakan di header
+        },
+      });
       return response.data;
     } catch (error) {
       throw error;

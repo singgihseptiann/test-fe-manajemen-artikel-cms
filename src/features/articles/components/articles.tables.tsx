@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -34,12 +34,13 @@ import { columns } from "./articles.column";
 import { useArticles } from "../hooks/useArticles";
 import { usePagination } from "@/context/pagination.context";
 import { Spinner } from "@/components/spinner";
+import Link from "next/link";
 
 export function ArticlesTable() {
   const { data: articles, isLoading } = useArticles();
-
   const { page, setPage } = usePagination();
 
+  const totalArticles = articles?.total ?? [];
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -76,42 +77,61 @@ export function ArticlesTable() {
 
   return (
     <div className="w-full overflow-hidden">
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter titles..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => (
-                <DropdownMenuCheckboxItem
-                  key={column.id}
-                  className="capitalize"
-                  checked={column.getIsVisible()}
-                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                >
-                  {column.id}
-                </DropdownMenuCheckboxItem>
-              ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+      <div className="rounded-md border bg-white">
+        <div className="border-b">
+          <div className="flex gap-2 p-2 py-5 font-semibold text-black">
+            {" "}
+            <p>Total Articles:</p>
+            <p>{totalArticles}</p>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2 p-2 py-5 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">
+                  Columns <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Input
+              placeholder="Filter titles..."
+              value={
+                (table.getColumn("title")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table.getColumn("title")?.setFilterValue(event.target.value)
+              }
+              className="h-10"
+            />
+          </div>
 
-      <div className="rounded-md border">
+          <Link href="/add-articles" className="inline-block">
+            <Button className="cursor-pointer bg-blue-500 text-white hover:bg-blue-600">
+              <Plus className="mr-2 h-4 w-4" />
+              Add Articles
+            </Button>
+          </Link>
+        </div>
         <Table>
-          <TableHeader>
+          <TableHeader className="bg-gray-100">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
@@ -165,32 +185,34 @@ export function ArticlesTable() {
             )}
           </TableBody>
         </Table>
-      </div>
 
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-muted-foreground flex-1 text-sm">
-          Page {page} of{" "}
-          {articles ? Math.ceil(articles.total / articles.limit) : 1}
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setPage(page - 1)}
-            disabled={page === 1}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setPage(page + 1)}
-            disabled={
-              !articles || page >= Math.ceil(articles.total / articles.limit)
-            }
-          >
-            Next
-          </Button>
+        <div className="flex items-center justify-end space-x-2 p-2 py-5">
+          <div className="text-muted-foreground flex-1 text-sm">
+            Page {page} of{" "}
+            {articles ? Math.ceil(articles.total / articles.limit) : 1}
+          </div>
+          <div className="space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="cursor-pointer"
+              onClick={() => setPage(page - 1)}
+              disabled={page === 1}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="cursor-pointer"
+              onClick={() => setPage(page + 1)}
+              disabled={
+                !articles || page >= Math.ceil(articles.total / articles.limit)
+              }
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </div>
     </div>
