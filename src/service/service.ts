@@ -42,10 +42,10 @@ const api = {
   },
 
   // Fungsi DELETE untuk menghapus data
-  delete: async (endpoint: string) => {
+  delete: async (endpoint: string, id: string) => {
     try {
-      const token = localStorage.getItem("user_token"); // Ambil token dari localStorage
-      const response = await apiServices.delete(endpoint, {
+      const token = localStorage.getItem("user_token");
+      const response = await apiServices.delete(`${endpoint}/${id}`, {
         headers: {
           Authorization: token ? `Bearer ${token}` : "", // Jika token ada, sertakan di header
         },

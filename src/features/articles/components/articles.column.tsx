@@ -2,7 +2,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Article } from "@/types/articles.types";
+
 import ConfirmationDialog from "@/components/confirmation.dialog";
+import { useDeleteArticles } from "../hooks/useArticles";
 
 export const columns: ColumnDef<Article>[] = [
   {
@@ -79,9 +81,11 @@ export const columns: ColumnDef<Article>[] = [
     cell: ({ row }) => {
       const article = row.original;
 
+      // Menggunakan useDeleteArticles untuk mendapatkan mutate
+      const { mutate: deleteArticle } = useDeleteArticles();
+
       const handleDelete = () => {
-        // Implement logic to delete the article here
-        console.log("Deleting article", article.id);
+        deleteArticle(article.id); // Panggil delete dengan ID artikel
       };
 
       return (
@@ -94,9 +98,9 @@ export const columns: ColumnDef<Article>[] = [
           </Button>
           <ConfirmationDialog
             triggerText="Delete"
-            title="Confirm Deletion"
-            description="Are you sure you want to delete this article?"
-            onConfirm={handleDelete}
+            title="Delete Articles"
+            description="Deleting this article is permanent and cannot be undone. All related content will be removed."
+            onConfirm={handleDelete} // Konfirmasi penghapusan
           />
         </div>
       );
