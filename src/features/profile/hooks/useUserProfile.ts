@@ -1,3 +1,4 @@
+"use client";
 import { useGetUserProfile } from "./useProfile";
 
 export function useUserProfile() {

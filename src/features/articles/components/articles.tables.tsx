@@ -37,7 +37,8 @@ import { Spinner } from "@/components/spinner";
 import Link from "next/link";
 
 export function ArticlesTable() {
-  const { data: articles, isLoading } = useArticles();
+  const { data: articles, isLoading, isFetching, isFetched } = useArticles();
+
   const { page, setPage } = usePagination();
 
   const totalArticles = articles?.total ?? [];
@@ -67,7 +68,7 @@ export function ArticlesTable() {
     },
   });
 
-  if (isLoading) {
+  if (isLoading && isFetching) {
     return (
       <div className="flex justify-center py-8">
         <Spinner />
@@ -148,7 +149,7 @@ export function ArticlesTable() {
             ))}
           </TableHeader>
           <TableBody>
-            {isLoading ? (
+            {isLoading || isFetching ? (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
