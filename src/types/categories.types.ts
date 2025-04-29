@@ -9,6 +9,7 @@ export type Category = {
 export type CategoriesResponse = {
   id: string;
   data: Category[];
+  name: string;
   totalData: number;
   currentPage: number;
   totalPages: number;

@@ -2,8 +2,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useServiceAddCategoryForm } from "./useServiceAddCategory";
+
 import { useState } from "react";
+import { useEditCategories } from "./useEditCategories";
 
 const FormSchema = z.object({
   name: z
@@ -16,12 +17,12 @@ const FormSchema = z.object({
     }),
 });
 
-export const useAddCategoriesForm = () => {
+export const useEditCategoriesForm = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
 
   const handleCloseDialog = () => setOpen(false);
   const handleOpenDialog = () => setOpen(true);
-  const categoriesMutation = useServiceAddCategoryForm();
+  const categoriesEditMutation = useEditCategories();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -31,7 +32,7 @@ export const useAddCategoriesForm = () => {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      await categoriesMutation.mutateAsync(data);
+      await categoriesEditMutation.mutateAsync({ id, data });
     } catch (error) {
       console.error("Error submitting article:", error);
     }
@@ -44,6 +45,6 @@ export const useAddCategoriesForm = () => {
     setOpen,
     handleCloseDialog,
     handleOpenDialog,
-    isSubmitting: categoriesMutation.isPending,
+    isSubmitting: categoriesEditMutation.isPending,
   };
 };

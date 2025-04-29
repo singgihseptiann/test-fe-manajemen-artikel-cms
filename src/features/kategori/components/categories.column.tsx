@@ -6,6 +6,7 @@ import { useDeleteCategories } from "../hooks/useGetCategories";
 import ConfirmationDialog from "@/components/confirmation.dialog";
 import { CategoriesResponse } from "@/types/categories.types";
 import { Checkbox } from "@/components/ui/checkbox";
+import { EditCategoriesForm } from "@/features/edit-kategori/components/edit.categories";
 
 export const columns: ColumnDef<CategoriesResponse>[] = [
   {
@@ -66,21 +67,13 @@ export const columns: ColumnDef<CategoriesResponse>[] = [
       return (
         <div className="flex space-x-2">
           {/* Edit button */}
-          <Link href={`/categories/edit/${category.id}`}>
-            <Button
-              variant="link"
-              size="sm"
-              className="text-blue-500 underline"
-            >
-              Edit
-            </Button>
-          </Link>
+          <EditCategoriesForm id={category.id} />
 
           {/* Delete confirmation dialog */}
           <ConfirmationDialog
             triggerText="Delete"
             title="Delete Category"
-            description="Deleting this category is permanent and cannot be undone."
+            description={`Delete category "${category.name}"? This will remove it from master data permanently.`}
             onConfirm={handleDelete}
           />
         </div>
