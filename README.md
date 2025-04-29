@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Proyek Next.js: fe-manajemen-artikel-cms
+Ini adalah proyek Next.js yang dibangun dengan menggunakan create-next-app.
 
-## Getting Started
+### stack
 
-First, run the development server:
+Stack yang Digunakan
+Next.js: Framework React untuk membangun aplikasi web dengan (app router, SSR dan CSR) .
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
+TypeScript: Superset JavaScript yang memungkinkan penggunaan tipe statis.
+
+Shadcn: Komponen UI untuk membangun antarmuka yang dapat disesuaikan dan modern.
+
+Axios: Library untuk melakukan HTTP request.
+
+TanStack Query: Library untuk data fetching, caching, dan sinkronisasi status.
+
+Zod: Library untuk validasi skema data.
+
+React Hook Form: Library untuk mengelola form dan validasi di React secara efisien.
+
+Tailwind CSS: Utility-first CSS framework untuk styling yang cepat dan fleksibel.
+
+Context State Management: Pengelolaan state global menggunakan React Context API.
+
+pnpm: Manajer paket yang lebih cepat dan efisien dibandingkan npm atau yarn.
+
+NProgress: Library untuk menampilkan progress bar selama navigasi halaman, memberikan indikasi kepada pengguna saat konten sedang dimuat.
+
+Icon: Lucide
+
+### start project
+
+Memulai
+Untuk memulai, jalankan server pengembangan dengan perintah berikut:
+
+bash
+Copy
+Edit
 pnpm dev
-# or
-bun dev
-```
+Buka http://localhost:3000 di browser untuk melihat hasilnya.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Anda dapat mulai mengedit halaman dengan memodifikasi file app/page.tsx. Halaman ini akan otomatis diperbarui saat Anda mengedit file.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Proyek ini menggunakan next/font untuk mengoptimalkan dan memuat font Geist, font baru dari Vercel.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Belajar Lebih Lanjut
+Untuk mempelajari lebih lanjut tentang Next.js, lihat sumber daya berikut:
 
-## Learn More
+Dokumentasi Next.js - Pelajari fitur dan API Next.js.
 
-To learn more about Next.js, take a look at the following resources:
+Belajar Next.js - Tutorial interaktif untuk Next.js.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Anda juga dapat memeriksa repositori Next.js di GitHub - umpan balik dan kontribusi Anda sangat dihargai!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Deploy ke Vercel
+Cara termudah untuk mendepoy aplikasi Next.js Anda adalah menggunakan Platform Vercel dari pencipta Next.js.
 
-## Deploy on Vercel
+Lihat dokumentasi deployment Next.js untuk detail lebih lanjut.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Aplikasi ini dapat diakses secara langsung melalui tautan Vercel.
