@@ -64,6 +64,20 @@ const api = {
       throw error;
     }
   },
+
+  postImg: async (endpoint: string, data: FormData) => {
+    try {
+      const token = localStorage.getItem("user_token");
+      const response = await apiServices.post(endpoint, data, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "", // ✅ FIXED HERE
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default api;

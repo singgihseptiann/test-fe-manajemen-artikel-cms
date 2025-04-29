@@ -1,12 +1,13 @@
 // useArticleForm.ts
-"use client";
 import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useServiceArticlesForm } from "./useServiceArticlesForm";
-import type { RichTextEditorHandle } from "@/features/add-articles/components/rich.text.editor";
+import { usePostImg } from "./usePostImg";
 
+import type { RichTextEditorHandle } from "@/features/add-articles/components/rich.text.editor";
+import { useImageContext } from "@/context/image.context";
 const formSchema = z.object({
   title: z
     .string()
@@ -18,10 +19,13 @@ const formSchema = z.object({
 });
 
 export function useArticleForm() {
+  const { imageUrl } = useImageContext();
+  console.log("imageUrl", imageUrl);
   const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<RichTextEditorHandle>(null);
   const articlesMutation = useServiceArticlesForm();
+  const { mutate: uploadImage, isPending: isUploading } = usePostImg();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,6 +44,10 @@ export function useArticleForm() {
     const file = e.target.files?.[0];
     if (file) {
       form.setValue("thumbnail", file);
+      const formData = new FormData();
+      formData.append("image", file);
+      uploadImage(formData);
+
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result as string);
@@ -73,12 +81,12 @@ export function useArticleForm() {
       title: values.title,
       content: content,
       categoryId: values.categoryId,
+      imageUrl: imageUrl, // Gunakan imageUrl dari context
     };
-
-    
 
     try {
       await articlesMutation.mutateAsync(articleData);
+      alert("Artikel berhasil ditambahkan!");
     } catch (error) {
       console.error("Error submitting article:", error);
     }
@@ -95,5 +103,6 @@ export function useArticleForm() {
     isSubmitting: articlesMutation.isPending,
     isError: articlesMutation.isError,
     isSuccess: articlesMutation.isSuccess,
+    isUploading,
   };
 }
