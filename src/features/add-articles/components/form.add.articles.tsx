@@ -153,28 +153,27 @@ export function FormAddArticles() {
           )}
         </div>
 
-        {/* Buttons at the bottom-right corner */}
-        <div className="mt-16 flex justify-end space-x-4">
+        <div className="mt-16 flex justify-center space-x-4 py-10 md:mt-16 md:justify-end md:py-5">
+          <Button
+            type="button"
+            variant={"outline"}
+            onClick={() => form.reset()}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="button"
+            className="e bg-gray-300 text-black hover:bg-gray-300"
+            onClick={handleUploadClick}
+          >
+            Preview
+          </Button>
           {/* Submit Button */}
           <Button
             type="submit"
             className="bg-blue-600 text-white hover:bg-blue-700"
           >
             {isSubmitting ? <Spinner /> : "Upload"}
-          </Button>
-          <Button
-            type="button"
-            className="bg-blue-600 text-white hover:bg-blue-700"
-            onClick={handleUploadClick}
-          >
-            Preview
-          </Button>
-          <Button
-            type="button"
-            className="bg-red-600 text-white hover:bg-red-700"
-            onClick={() => form.reset()}
-          >
-            Cancel
           </Button>
         </div>
       </form>
