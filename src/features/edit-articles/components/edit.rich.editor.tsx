@@ -9,7 +9,7 @@ import React, {
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 
-export type RichTextEditorHandle = {
+export type EditRichTextEditorHandle = {
   getContent: () => string;
   setContent: (content: string) => void;
   clearContent: () => void;
@@ -21,7 +21,7 @@ interface EditRichTextEditorProps {
 }
 
 const EditRichTextEditor = forwardRef<
-  RichTextEditorHandle,
+  EditRichTextEditorHandle,
   EditRichTextEditorProps
 >(({ initialContent = "", onChange }, ref) => {
   const editorRef = useRef<HTMLDivElement>(null);
