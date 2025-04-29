@@ -1,4 +1,11 @@
-import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -19,13 +26,17 @@ const ConfirmationDialog = ({
 
   const handleConfirm = () => {
     onConfirm();
-    setIsDialogOpen(false); // Menutup dialog setelah konfirmasi
+    setIsDialogOpen(false);
   };
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="link" size="sm" className="text-red-500 underline">
+        <Button
+          variant="link"
+          size="sm"
+          className="cursor-pointer text-red-500 underline"
+        >
           {triggerText}
         </Button>
       </DialogTrigger>
@@ -33,10 +44,18 @@ const ConfirmationDialog = ({
         <DialogTitle>{title}</DialogTitle>
         <DialogDescription>{description}</DialogDescription>
         <DialogFooter>
-          <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+          <Button
+            variant="outline"
+            className="cursor-pointer"
+            onClick={() => setIsDialogOpen(false)}
+          >
             Cancel
           </Button>
-          <Button variant="destructive" onClick={handleConfirm}>
+          <Button
+            variant="destructive"
+            className="cursor-pointer"
+            onClick={handleConfirm}
+          >
             Delete
           </Button>
         </DialogFooter>

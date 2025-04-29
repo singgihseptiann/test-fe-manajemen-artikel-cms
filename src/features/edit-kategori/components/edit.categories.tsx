@@ -17,27 +17,41 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useAddCategoriesForm } from "../hooks/useAddCategoriesForm";
-import { Plus } from "lucide-react";
-import { useState } from "react";
 
-export function AddCategoriesForm() {
-  const { form, onSubmit, handleCloseDialog, handleOpenDialog, open, setOpen } =
-    useAddCategoriesForm();
+import { Plus } from "lucide-react";
+
+import { useEditCategoriesForm } from "../hooks/useEditCategoriesForm";
+import { Spinner } from "@/components/spinner";
+
+export function EditCategoriesForm({ id }: { id: string }) {
+  const {
+    form,
+    onSubmit,
+    handleCloseDialog,
+    handleOpenDialog,
+    open,
+    setOpen,
+    isSubmitting,
+  } = useEditCategoriesForm({ id });
+  console.log("id", id);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
-        className="flex cursor-pointer items-center justify-center gap-2 rounded-md bg-blue-500 p-2 px-5 text-white hover:bg-blue-600"
+        className="flex items-center justify-center gap-2 rounded-md px-5 text-blue-500"
         onClick={handleOpenDialog} // Open dialog on click
       >
-        <Plus />
-        Add Category
+        <Button
+          variant={"link"}
+          className="cursor-pointer text-blue-500 underline"
+        >
+          Edit Category
+        </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-start">Add Categories</DialogTitle>
+          <DialogTitle className="text-start">Edit Category</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -51,7 +65,7 @@ export function AddCategoriesForm() {
                 <FormItem>
                   <FormLabel>Category</FormLabel>
                   <FormControl>
-                    <Input placeholder="Input category" {...field} />
+                    <Input placeholder="Input category baru" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -62,11 +76,19 @@ export function AddCategoriesForm() {
                 type="button"
                 variant={"outline"}
                 onClick={handleCloseDialog}
+                className="cursor-pointer"
               >
                 Cancel
               </Button>
-              <Button type="submit" className="bg-blue-500 hover:bg-blue-500">
-                Add
+              <Button
+                type="submit"
+                className="cursor-pointer bg-blue-500 hover:bg-blue-600"
+              >
+                {isSubmitting ? (
+                  <Spinner size="sm" variant="white" />
+                ) : (
+                  "Save Changes"
+                )}
               </Button>
             </div>
           </form>
