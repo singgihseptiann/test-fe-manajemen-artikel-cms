@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useEditArticles, useGetArticlesById } from "./useEditArticles";
 import type { RichTextEditorHandle } from "@/features/add-articles/components/rich.text.editor";
+import { EditRichTextEditorHandle } from "../components/edit.rich.editor";
 
 const formSchema = z.object({
   title: z.string().min(3, { message: "Please enter a title." }),
@@ -12,10 +13,9 @@ const formSchema = z.object({
 });
 
 export function useEditArticleForm({ id }: { id: string }) {
-
   const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const editorRef = useRef<RichTextEditorHandle>(null);
+  const editorRef = useRef<EditRichTextEditorHandle>(null);
 
   const articlesMutation = useEditArticles();
   const { data: article, isLoading: isLoadingArticle } = useGetArticlesById(id);
