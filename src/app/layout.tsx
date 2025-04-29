@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 import { Layout } from "@/layout/layout";
+import { Suspense } from "react";
+import ProgressBar from "@/components/ProgressBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +31,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Suspense>
+          <ProgressBar />
+        </Suspense>
         <Providers>
           <Layout>{children}</Layout>
         </Providers>

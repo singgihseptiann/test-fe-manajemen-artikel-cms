@@ -30,7 +30,6 @@ export function UserDropdown() {
     return null;
   }
 
-  // Gunakan data dari API atau data yang disimpan di localStorage jika terjadi error
   const usernameFromAPI = data?.username;
   const usernameFromStorage = localStorage.getItem("user_username");
 
@@ -60,33 +59,40 @@ export function UserDropdown() {
           <DropdownMenuLabel>{username || "User"}</DropdownMenuLabel>
           <DropdownMenuGroup>
             <Link href="/profile">
-              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
+                Profile
+              </DropdownMenuItem>
             </Link>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem onClick={() => setOpenDialog(true)}>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => setOpenDialog(true)}
+          >
             Logout
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Dialog di luar DropdownMenu agar tidak tertimpa event */}
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. You will be logged out of your
-              account.
-            </DialogDescription>
+            <DialogTitle>Logout</DialogTitle>
+            <DialogDescription>Are you sure want to logout?</DialogDescription>
           </DialogHeader>
           <div className="flex justify-end gap-2 pt-4">
-            <Button variant="outline" onClick={() => setOpenDialog(false)}>
+            <Button
+              variant="outline"
+              className="cursor-pointer"
+              onClick={() => setOpenDialog(false)}
+            >
               Cancel
             </Button>
-            <Button variant="destructive" onClick={handleLogout}>
+            <Button
+              className="cursor-pointer bg-blue-500 hover:bg-blue-600"
+              onClick={handleLogout}
+            >
               Logout
             </Button>
           </div>
