@@ -73,7 +73,7 @@ export const columns: ColumnDef<CategoriesResponse>[] = [
           <ConfirmationDialog
             triggerText="Delete"
             title="Delete Category"
-            description="Deleting this category is permanent and cannot be undone."
+            description={`Delete category "${category.name}"? This will remove it from master data permanently.`}
             onConfirm={handleDelete}
           />
         </div>

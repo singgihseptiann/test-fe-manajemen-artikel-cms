@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -18,9 +18,9 @@ const FormSchema = z.object({
 
 export const useAddCategoriesForm = () => {
   const [open, setOpen] = useState(false);
-  
-    const handleCloseDialog = () => setOpen(false); 
-    const handleOpenDialog = () => setOpen(true); 
+
+  const handleCloseDialog = () => setOpen(false);
+  const handleOpenDialog = () => setOpen(true);
   const categoriesMutation = useServiceAddCategoryForm();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -43,6 +43,7 @@ export const useAddCategoriesForm = () => {
     open,
     setOpen,
     handleCloseDialog,
-    handleOpenDialog
+    handleOpenDialog,
+    isSubmitting: categoriesMutation.isPending,
   };
 };

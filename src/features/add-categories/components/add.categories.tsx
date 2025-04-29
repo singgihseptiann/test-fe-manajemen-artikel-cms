@@ -20,10 +20,18 @@ import { Input } from "@/components/ui/input";
 import { useAddCategoriesForm } from "../hooks/useAddCategoriesForm";
 import { Plus } from "lucide-react";
 import { useState } from "react";
+import { Spinner } from "@/components/spinner";
 
 export function AddCategoriesForm() {
-  const { form, onSubmit, handleCloseDialog, handleOpenDialog, open, setOpen } =
-    useAddCategoriesForm();
+  const {
+    form,
+    onSubmit,
+    handleCloseDialog,
+    handleOpenDialog,
+    open,
+    setOpen,
+    isSubmitting,
+  } = useAddCategoriesForm();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -62,11 +70,15 @@ export function AddCategoriesForm() {
                 type="button"
                 variant={"outline"}
                 onClick={handleCloseDialog}
+                className="cursor-pointer"
               >
                 Cancel
               </Button>
-              <Button type="submit" className="bg-blue-500 hover:bg-blue-500">
-                Add
+              <Button
+                type="submit"
+                className="cursor-pointer bg-blue-500 hover:bg-blue-600"
+              >
+                {isSubmitting ? <Spinner size="sm" variant="white" /> : "Add"}
               </Button>
             </div>
           </form>
